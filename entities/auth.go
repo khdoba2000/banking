@@ -57,3 +57,40 @@ type Tokens struct {
 	AccessToken  string
 	RefreshToken string
 }
+
+// SendCodeReq ...
+type SendCodeReq struct {
+	PhoneNumber string
+}
+
+// Validate ...
+func (req *SendCodeReq) Validate() error {
+	if !utils.IsPhoneValid(req.PhoneNumber) {
+		return errors.New("invalid PhoneNumber: must in format +99XXXXXXXXXX")
+	}
+
+	return nil
+}
+
+// VerifyCodeReq ...
+type VerifyCodeReq struct {
+	PhoneNumber string
+	Code        string
+}
+
+// Validate ...
+func (req *VerifyCodeReq) Validate() error {
+	if !utils.IsPhoneValid(req.PhoneNumber) {
+		return errors.New("invalid PhoneNumber: must in format +99XXXXXXXXXX")
+	}
+
+	if len(req.Code) < 6 {
+		return errors.New("invalid Code: must be 6 characters long")
+	}
+	return nil
+}
+
+// VerifyCodeRes ...
+type VerifyCodeRes struct {
+	AccessToken string
+}

@@ -2,6 +2,7 @@ package middlewares
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -45,7 +46,7 @@ func (jwta *JWTRoleAuthorizer) Middleware() gin.HandlerFunc {
 		allowed, err := jwta.checkPermission(c.Request)
 		if err != nil {
 			// Casbin.Enforcer not working normal
-			jwta.logger.Error("Error checking permission", zap.Any("error", err))
+			jwta.logger.Error("Error checking permission", logger.Error(err))
 			c.AbortWithError(http.StatusInternalServerError, err)
 			return
 		}
@@ -62,7 +63,7 @@ func (jwta *JWTRoleAuthorizer) Middleware() gin.HandlerFunc {
 
 func (jwta *JWTRoleAuthorizer) checkPermission(r *http.Request) (bool, error) {
 
-	role, err := jwta.getUser(r.Header.Get("Authorization"))
+	role, err := jwta.getRole(r.Header.Get("Authorization"))
 	if err != nil {
 		return false, err
 	}
@@ -73,12 +74,17 @@ func (jwta *JWTRoleAuthorizer) checkPermission(r *http.Request) (bool, error) {
 	return enforsed, err
 }
 
-func (jwta *JWTRoleAuthorizer) getUser(accessToken string) (string, error) {
+func (jwta *JWTRoleAuthorizer) getRole(accessToken string) (string, error) {
 
-	claims, err := jwt.ExtractClaims(accessToken, jwta.signingKey)
+	role, err := jwt.ExtractFromClaims("role", accessToken, jwta.signingKey)
 	if err != nil {
 		log.Println("could not extract claims:", err)
 		return "", err
 	}
-	return claims["role"].(string), nil
+
+	if _, ok := role.(string); !ok {
+		return "", fmt.Errorf("role: %v not stringable", role)
+	}
+
+	return role.(string), nil
 }

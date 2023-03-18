@@ -18,8 +18,10 @@ import (
 
 // AuthController
 type AuthController interface {
-	Login(ctx context.Context, model entities.LoginReq) (*entities.LoginRes, error)
-	Signup(ctx context.Context, model entities.SignupReq) (*entities.SignupRes, error)
+	Login(ctx context.Context, req entities.LoginReq) (*entities.LoginRes, error)
+	Signup(ctx context.Context, req entities.SignupReq) (*entities.SignupRes, error)
+	SendCode(ctx context.Context, req entities.SendCodeReq) error
+	VerifyCode(ctx context.Context, req entities.VerifyCodeReq) (*entities.VerifyCodeRes, error)
 }
 
 type authController struct {
@@ -128,4 +130,49 @@ func (ac authController) Signup(ctx context.Context, req entities.SignupReq) (*e
 		ID:     customerID,
 		Tokens: tokens,
 	}, nil
+}
+
+// SendCode ...
+func (ac authController) SendCode(ctx context.Context, req entities.SendCodeReq) error {
+
+	_, err := security.GenerateRandomCode(constants.VerifyCodeLength)
+	if err != nil {
+		return err
+	}
+	// send code with sms service provider
+
+	// save the code and the phoneNumber tuple to temporary storage with verified = false status
+
+	return nil
+}
+
+// VerifyCode ...
+func (ac authController) VerifyCode(ctx context.Context, req entities.VerifyCodeReq) (*entities.VerifyCodeRes, error) {
+
+	// search the code and the phoneNumber tuple within temporary storage
+
+	//if found and code is the same
+	// give the tuple status "verified"
+	// ......
+	//and
+	//return a temporary access token to get access to Signup API
+
+	tokenMetadata := map[string]string{
+		"phone_number": req.PhoneNumber,
+		"role":         constants.CustomerRoleInSignup,
+	}
+
+	accessToken, err := jwt.GenerateNewJWTToken(tokenMetadata, constants.JWTAccessTokenExpireDuration, ac.cfg.JWTSecretKey)
+	if err != nil {
+		ac.log.Error("calling GenerateNewTokens failed", logger.Error(err))
+		return nil, err
+	}
+
+	return &entities.VerifyCodeRes{AccessToken: accessToken}, nil
+
+	//if found but the code is different
+	// return errors.New("invalid code")
+
+	//if not found return error
+	// return errors.New("invalid code")
 }

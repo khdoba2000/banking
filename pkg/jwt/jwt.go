@@ -1,7 +1,9 @@
 package jwt
 
 import (
+	"errors"
 	"fmt"
+	"log"
 	"strings"
 	"time"
 
@@ -34,6 +36,27 @@ func ExtractClaims(tokenString string, signingKey []byte) (jwtgo.MapClaims, erro
 	}
 
 	return claims, nil
+}
+
+// ExtractFromClaims extracts the key from jwt claim's metadata
+func ExtractFromClaims(key, accessToken string, signingKey []byte) (interface{}, error) {
+
+	claims, err := ExtractClaims(accessToken, signingKey)
+	if err != nil {
+		log.Println("could not extract claims:", err)
+		return "", err
+	}
+
+	if _, ok := claims[key]; !ok {
+		return nil, errors.New("could not find claims for key: " + key)
+	}
+
+	// if _, ok := claims[key].(string); !ok {
+	// 	return nil, fmt.Errorf("claims key: %v not stringable", key)
+	// }
+
+	return claims[key], nil
+
 }
 
 // GenerateNewJWTToken generates a new JWT token
