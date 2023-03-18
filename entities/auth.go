@@ -15,6 +15,7 @@ type LoginRes struct {
 	ID          uuid.UUID
 	PhoneNumber string
 	Name        string
+	Tokens      Tokens
 }
 
 // SignupReq ...
@@ -26,5 +27,12 @@ type SignupReq struct {
 
 // SignupRes ...
 type SignupRes struct {
-	ID uuid.UUID
+	ID     uuid.UUID
+	Tokens Tokens
+}
+
+// Tokens jwt tokens for authorization
+type Tokens struct {
+	AccessToken  string
+	RefreshToken string
 }

@@ -47,15 +47,13 @@ type Configuration struct {
 	RefreshPasswdTokenDuration time.Duration
 
 	// context timeout in seconds
-	CtxTimeout        int
+	CtxTimeoutSeconds int
 	SigninKey         string
 	ServerReadTimeout int
 
-	JWTSecretKey              string
-	JWTSecretKeyExpireMinutes int
-	JWTRefreshKey             string
-	JWTRefreshKeyExpireHours  int
-	JWTRefreshKeyExpireDays   int
+	JWTSecretKey                  string
+	JWTAccessTokenExpireDurations time.Duration
+	JWTRefreshTokenExpireDuration time.Duration
 
 	CodeToIgnore  string
 	PhoneToIgnore string
@@ -89,12 +87,8 @@ func load() *Configuration {
 	config.CasbinConfigPath = v.GetString("CASBIN_CONFIG_PATH")
 	config.MiddlewareRolesPath = v.GetString("MIDDLEWARE_ROLES_PATH")
 	config.JWTSecretKey = v.GetString("JWT_SECRET_KEY")
-	config.JWTRefreshKey = v.GetString("JWT_REFRESH_KEY")
 
-	config.JWTSecretKeyExpireMinutes = v.GetInt("JWT_SECRET_KEY_EXPIRE_MINUTES_COUNT")
-	config.JWTRefreshKeyExpireHours = v.GetInt("JWT_REFRESH_KEY_EXPIRE_HOURS_COUNT")
-	config.JWTRefreshKeyExpireDays = v.GetInt("JWT_REFRESH_KEY_EXPIRE_DAYS_COUNT")
-	config.CtxTimeout = v.GetInt("CONTEXT_TIMEOUT")
+	config.CtxTimeoutSeconds = v.GetInt("CONTEXT_TIMEOUT_SECONDS")
 
 	config.CodeToIgnore = v.GetString("CODE_TO_IGNORE")
 	config.PhoneToIgnore = "+998900000000"

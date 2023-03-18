@@ -3,8 +3,10 @@ package jwt
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	jwtgo "github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt"
 )
 
 // ExtractClaims extracts roles from the claims of JWT token
@@ -32,4 +34,30 @@ func ExtractClaims(tokenString string, signingKey []byte) (jwtgo.MapClaims, erro
 	}
 
 	return claims, nil
+}
+
+// GenerateNewJWTToken generates a new JWT token
+func GenerateNewJWTToken(tokenMetadata map[string]string, tokenExpireTime time.Duration, signingKey string) (string, error) {
+
+	// Create a new claims.
+	claims := jwt.MapClaims{}
+
+	for key, value := range tokenMetadata {
+		claims[key] = value
+	}
+
+	claims["iat"] = time.Now().Unix()
+	claims["expires"] = time.Now().Add(tokenExpireTime).Unix()
+
+	// Create a new JWT access token with claims.
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+	// Generate token.
+	t, err := token.SignedString([]byte(signingKey))
+	if err != nil {
+		// Return error, it JWT token generation failed.
+		return "", err
+	}
+
+	return t, nil
 }

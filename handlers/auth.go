@@ -1,7 +1,11 @@
 package handlers
 
 import (
+	"context"
+	"time"
+
 	"github.com/gin-gonic/gin"
+	"github.com/khdoba/banking/configs"
 	"github.com/khdoba/banking/entities"
 	"github.com/khdoba/banking/pkg/http"
 )
@@ -15,8 +19,11 @@ func (h *Handler) Login(c *gin.Context) {
 		return
 	}
 
+	ctx, cancel := context.WithTimeout(c.Request.Context(), time.Second*time.Duration(configs.Config().CtxTimeoutSeconds))
+	defer cancel()
+
 	resp, err := h.authController.Login(
-		c.Request.Context(),
+		ctx,
 		login,
 	)
 	if err != nil {
@@ -36,8 +43,11 @@ func (h *Handler) SignUp(c *gin.Context) {
 		return
 	}
 
+	ctx, cancel := context.WithTimeout(c.Request.Context(), time.Second*time.Duration(configs.Config().CtxTimeoutSeconds))
+	defer cancel()
+
 	resp, err := h.authController.Signup(
-		c.Request.Context(),
+		ctx,
 		req,
 	)
 	if err != nil {
