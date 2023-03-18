@@ -11,12 +11,14 @@ import (
 
 type Storage interface {
 	Authenitication() repo.IAuthStorage
+	Customer() repo.ICustomerStorage
 	// other storage interfaces
 	//
 }
 
 type storagePg struct {
-	authRepo repo.IAuthStorage
+	authRepo     repo.IAuthStorage
+	customerRepo repo.ICustomerStorage
 }
 
 // New
@@ -27,11 +29,17 @@ func New(cfg *configs.Configuration) *storagePg {
 		log.Fatalf("error connecting to postgres database: %v", err)
 	}
 	return &storagePg{
-		authRepo: postgres.NewAuth(postgresDB),
+		authRepo:     postgres.NewAuth(postgresDB),
+		customerRepo: postgres.NewCustomer(postgresDB),
 	}
 }
 
-// Authenitication returns authenication
+// Authenitication returns authenication repository
 func (s storagePg) Authenitication() repo.IAuthStorage {
 	return s.authRepo
+}
+
+// Customer returns customer repository
+func (s storagePg) Customer() repo.ICustomerStorage {
+	return s.customerRepo
 }

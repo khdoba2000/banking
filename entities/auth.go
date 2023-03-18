@@ -1,7 +1,9 @@
 package entities
 
 import (
-	"github.com/google/uuid"
+	"errors"
+
+	"github.com/khdoba/banking/pkg/utils"
 )
 
 // LoginReq ...
@@ -10,9 +12,18 @@ type LoginReq struct {
 	PhoneNumber string
 }
 
+// Validate ...
+func (req *LoginReq) Validate() error {
+	if !utils.IsPhoneValid(req.PhoneNumber) {
+		return errors.New("invalid PhoneNumber: must in format +99XXXXXXXXXX")
+	}
+
+	return utils.ValidatePassword(req.Password)
+}
+
 // LoginRes ...
 type LoginRes struct {
-	ID          uuid.UUID
+	ID          string
 	PhoneNumber string
 	Name        string
 	Tokens      Tokens
@@ -20,14 +31,24 @@ type LoginRes struct {
 
 // SignupReq ...
 type SignupReq struct {
+	ID          string
 	PhoneNumber string
 	Name        string
 	Password    string
 }
 
+// Validate ...
+func (req *SignupReq) Validate() error {
+	if !utils.IsPhoneValid(req.PhoneNumber) {
+		return errors.New("invalid PhoneNumber: must in format +99XXXXXXXXXX")
+	}
+
+	return utils.ValidatePassword(req.Password)
+}
+
 // SignupRes ...
 type SignupRes struct {
-	ID     uuid.UUID
+	ID     string
 	Tokens Tokens
 }
 

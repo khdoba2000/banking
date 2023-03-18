@@ -12,8 +12,14 @@ import (
 
 // Login loges in the user with the given credentials
 func (h *Handler) Login(c *gin.Context) {
-	login := entities.LoginReq{}
-	err := c.ShouldBindJSON(&login)
+	loginReq := entities.LoginReq{}
+	err := c.ShouldBindJSON(&loginReq)
+	if err != nil {
+		h.handleResponse(c, http.BadRequest, err.Error())
+		return
+	}
+
+	err = loginReq.Validate()
 	if err != nil {
 		h.handleResponse(c, http.BadRequest, err.Error())
 		return
@@ -24,10 +30,10 @@ func (h *Handler) Login(c *gin.Context) {
 
 	resp, err := h.authController.Login(
 		ctx,
-		login,
+		loginReq,
 	)
 	if err != nil {
-		h.handleResponse(c, http.InternalServerError, err.Error())
+		h.handleResponse(c, StatusFromError(err), err.Error())
 		return
 	}
 
@@ -43,6 +49,12 @@ func (h *Handler) SignUp(c *gin.Context) {
 		return
 	}
 
+	err = req.Validate()
+	if err != nil {
+		h.handleResponse(c, http.BadRequest, err.Error())
+		return
+	}
+
 	ctx, cancel := context.WithTimeout(c.Request.Context(), time.Second*time.Duration(configs.Config().CtxTimeoutSeconds))
 	defer cancel()
 
@@ -51,7 +63,7 @@ func (h *Handler) SignUp(c *gin.Context) {
 		req,
 	)
 	if err != nil {
-		h.handleResponse(c, http.InternalServerError, err.Error())
+		h.handleResponse(c, StatusFromError(err), err.Error())
 		return
 	}
 

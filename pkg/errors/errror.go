@@ -1,10 +1,24 @@
 package errors
 
 import (
+	"fmt"
 	"net/http"
-
-	e "github.com/khdoba/banking/pkg/errors"
 )
+
+type status struct {
+	code        int
+	description string
+}
+
+// NewError returns a new error with status code and description
+func NewError(code int, description string) error {
+	return status{code: code, description: description}
+}
+
+// Error implements the error interface
+func (s status) Error() string {
+	return s.description
+}
 
 // var (
 // 	ErrPasswordTooShort      = status{Code: http.StatusBadRequest, Description: "password is too short"}
@@ -19,6 +33,17 @@ import (
 // )
 
 var (
-	ErrCustomerNotExists     = e.NewError(http.StatusNotFound, "customer not exists")
-	ErrCustomerAlreadyExists = e.NewError(http.StatusNotFound, "customer with this phone number already exists")
+	ErrCustomerNotExists     = status{code: http.StatusNotFound, description: "no customer exists"}
+	ErrCustomerAlreadyExists = status{code: http.StatusBadRequest, description: "customer with this phone number already exists"}
 )
+
+func ExtractStatusCode(err error) (int, bool) {
+	switch err := err.(type) {
+	case status:
+		fmt.Printf("status error: %s\n", err)
+		return err.code, true
+	default:
+		fmt.Printf("unexpected error: %s\n", err)
+		return http.StatusInternalServerError, false
+	}
+}

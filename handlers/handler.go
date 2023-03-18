@@ -1,11 +1,15 @@
 package handlers
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/khdoba/banking/configs"
 	authcontroller "github.com/khdoba/banking/controllers/auth"
 	"github.com/khdoba/banking/logger"
-	"github.com/khdoba/banking/pkg/http"
+	e "github.com/khdoba/banking/pkg/errors"
+
+	httppkg "github.com/khdoba/banking/pkg/http"
 )
 
 type Handler struct {
@@ -24,7 +28,7 @@ func New(cfg *configs.Configuration, log logger.LoggerI, authController authcont
 }
 
 // handleResponse
-func (h *Handler) handleResponse(c *gin.Context, status http.Status, data interface{}) {
+func (h *Handler) handleResponse(c *gin.Context, status httppkg.Status, data interface{}) {
 	switch code := status.Code; {
 	case code < 300:
 		h.log.Info(
@@ -52,7 +56,7 @@ func (h *Handler) handleResponse(c *gin.Context, status http.Status, data interf
 		)
 	}
 
-	c.JSON(status.Code, http.Response{
+	c.JSON(status.Code, httppkg.Response{
 		Status:      status.Status,
 		Description: status.Description,
 		Data:        data,
@@ -68,3 +72,51 @@ func (h *Handler) handleResponse(c *gin.Context, status http.Status, data interf
 // 	offsetStr := c.DefaultQuery("limit", h.cfg.DefaultLimit)
 // 	return strconv.Atoi(offsetStr)
 // }
+
+// StatusFromError ...
+func StatusFromError(err error) httppkg.Status {
+	if err == nil {
+		return httppkg.OK
+	}
+
+	code, ok := e.ExtractStatusCode(err)
+
+	if !ok || code == http.StatusInternalServerError {
+		return httppkg.Status{
+			Code:        http.StatusInternalServerError,
+			Status:      "INTERNAL_SERVER_ERROR",
+			Description: err.Error(),
+		}
+	} else if code == http.StatusNotFound {
+		return httppkg.Status{
+			Code:        http.StatusNotFound,
+			Status:      "NOT_FOUND",
+			Description: err.Error(),
+		}
+	} else if code == http.StatusBadRequest {
+		return httppkg.Status{
+			Code:        http.StatusBadRequest,
+			Status:      "BAD_REQUEST",
+			Description: err.Error(),
+		}
+	} else if code == http.StatusForbidden {
+		return httppkg.Status{
+			Code:        http.StatusForbidden,
+			Status:      "FORBIDDEN",
+			Description: err.Error(),
+		}
+	} else if code == http.StatusUnauthorized {
+		return httppkg.Status{
+			Code:        http.StatusUnauthorized,
+			Status:      "FORBIDDEN",
+			Description: err.Error(),
+		}
+	} else {
+		return httppkg.Status{
+			Code:        http.StatusInternalServerError,
+			Status:      "INTERNAL_SERVER_ERROR",
+			Description: err.Error(),
+		}
+	}
+
+}
