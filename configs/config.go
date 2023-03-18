@@ -65,7 +65,7 @@ func load() *Configuration {
 
 	// load .env file from given path
 	// we keep it empty it will load .env from current directory
-	err := godotenv.Load("../.env")
+	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatal("error loading env file: ", err)
 	}
@@ -79,7 +79,6 @@ func load() *Configuration {
 	config.HTTPPort = v.GetString("HTTP_PORT")
 
 	config.LogLevel = v.GetString("LOG_LEVEL")
-	config.Environment = v.GetString("ENVIRONMENT")
 
 	config.PostgresDatabase = v.GetString("POSTGRES_DB")
 	config.PostgresUser = v.GetString("POSTGRES_USER")

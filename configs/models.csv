@@ -1,7 +1,7 @@
 p, any, /api/*, GET 
 
-p, unauthorized, /api/customer/login, POST
-p, customer, /api/customer/logout, DELETE
-p, unauthorized, /api/customer/sign-up, POST
+p, unauthorized, /api/auth/login, POST
+p, unauthorized, /api/auth/sign-up, POST
+p, customer, /api/auth/logout, DELETE
 
 p, unauthorized, /api/customer/payments, GET
