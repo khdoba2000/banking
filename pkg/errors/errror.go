@@ -1,7 +1,6 @@
 package errors
 
 import (
-	"fmt"
 	"net/http"
 )
 
@@ -37,13 +36,14 @@ var (
 	ErrCustomerAlreadyExists = status{code: http.StatusBadRequest, description: "customer with this phone number already exists"}
 )
 
+// ExtractStatusCode extracts the status code from the error
 func ExtractStatusCode(err error) (int, bool) {
 	switch err := err.(type) {
 	case status:
-		fmt.Printf("status error: %s\n", err)
+		// status error
 		return err.code, true
 	default:
-		fmt.Printf("unexpected error: %s\n", err)
+		// non-status error
 		return http.StatusInternalServerError, false
 	}
 }

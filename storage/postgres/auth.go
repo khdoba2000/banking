@@ -4,7 +4,10 @@ import (
 	"context"
 
 	"github.com/jmoiron/sqlx"
+	"github.com/khdoba/banking/constants"
 	"github.com/khdoba/banking/entities"
+	e "github.com/khdoba/banking/errors"
+	"github.com/lib/pq"
 	_ "github.com/lib/pq"
 )
 
@@ -54,6 +57,12 @@ func (r *authRepo) Signup(ctx context.Context, req entities.SignupReq) (*entitie
 	`, req.ID, req.Name, req.PhoneNumber, req.Password)
 
 	if err != nil {
+		pgErr, isPGErr := err.(*pq.Error)
+		if isPGErr {
+			if pgErr.Code == constants.PGUniqueKeyViolationCode {
+				return nil, e.ErrCustomerAlreadyExists
+			}
+		}
 		return nil, err
 	}
 

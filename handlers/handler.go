@@ -80,7 +80,6 @@ func StatusFromError(err error) httppkg.Status {
 	}
 
 	code, ok := e.ExtractStatusCode(err)
-
 	if !ok || code == http.StatusInternalServerError {
 		return httppkg.Status{
 			Code:        http.StatusInternalServerError,

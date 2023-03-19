@@ -105,6 +105,9 @@ func (ac authController) Signup(ctx context.Context, req entities.SignupReq) (*e
 	_, err = ac.storage.Authenitication().Signup(ctx, req)
 	if err != nil {
 		ac.log.Error("calling Signup failed", logger.Error(err))
+		// if errors.Is(err, e.ErrCustomerAlreadyExists) {
+		// 	return nil, e.ErrCustomerAlreadyExists
+		// }
 		return nil, err
 	}
 

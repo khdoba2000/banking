@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"context"
-	"errors"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -64,7 +63,7 @@ func (h *Handler) SignUp(c *gin.Context) {
 	}
 	if req.PhoneNumber != phoneNumberInToken {
 		// if the phone number did not match the one in the token generated in verifyCode phase
-		h.handleResponse(c, http.BadRequest, errors.New("invalid phone number"))
+		h.handleResponse(c, http.Forbidden, "invalid phone number")
 		return
 	}
 
