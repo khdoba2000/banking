@@ -99,14 +99,32 @@ func (ac authController) Signup(ctx context.Context, req entities.SignupReq) (*e
 		return nil, err
 	}
 
-	req.ID = customerID
-	req.Password = hashedPassword
+	customer := entities.Customer{
+		ID:          customerID,
+		Name:        req.Name,
+		Password:    hashedPassword,
+		PhoneNumber: req.PhoneNumber,
+	}
 
-	_, err = ac.storage.Authenitication().Signup(ctx, req)
+	err = ac.storage.Customer().Create(ctx, customer)
 	if err != nil {
 		ac.log.Error("calling Signup failed", logger.Error(err))
 		// if errors.Is(err, e.ErrCustomerAlreadyExists) {
 		// 	return nil, e.ErrCustomerAlreadyExists
+		// }
+		return nil, err
+	}
+
+	accountID := uuid.NewString()
+
+	err = ac.storage.Account().Create(ctx, entities.CreateAccountReq{
+		ID:      accountID,
+		OwnerID: customerID,
+	})
+	if err != nil {
+		ac.log.Error("calling Account.Create failed", logger.Error(err))
+		// if errors.Is(err, e.ErrAccountAlreadyExists) {
+		// 	return nil, e.ErrAccountAlreadyExists
 		// }
 		return nil, err
 	}

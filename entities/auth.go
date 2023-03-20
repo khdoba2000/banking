@@ -31,9 +31,8 @@ type LoginRes struct {
 
 // SignupReq ...
 type SignupReq struct {
-	ID          string
-	PhoneNumber string
 	Name        string
+	PhoneNumber string
 	Password    string
 }
 
