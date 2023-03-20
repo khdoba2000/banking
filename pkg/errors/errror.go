@@ -31,11 +31,6 @@ func (s status) Error() string {
 // 	ErrAuthNotGiven          = status{Code: http.StatusBadRequest, Description: "auth not given"}
 // )
 
-var (
-	ErrCustomerNotExists     = status{code: http.StatusNotFound, description: "no customer exists"}
-	ErrCustomerAlreadyExists = status{code: http.StatusBadRequest, description: "customer with this phone number already exists"}
-)
-
 // ExtractStatusCode extracts the status code from the error
 func ExtractStatusCode(err error) (int, bool) {
 	switch err := err.(type) {

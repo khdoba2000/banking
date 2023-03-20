@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/khdoba/banking/configs"
 	"github.com/khdoba/banking/constants"
+	accountcontroller "github.com/khdoba/banking/controllers/account"
 	authcontroller "github.com/khdoba/banking/controllers/auth"
 	"github.com/khdoba/banking/handlers"
 	"github.com/khdoba/banking/logger"
@@ -34,9 +35,10 @@ func main() {
 
 	//controllers init
 	authcontroller := authcontroller.NewAuthController(log, strg)
+	accountcontroller := accountcontroller.NewAccountController(log, strg)
 
 	//handlers init
-	h := handlers.New(cfg, log, authcontroller)
+	h := handlers.New(cfg, log, authcontroller, accountcontroller)
 
 	//routers
 	router := routers.New(h, cfg, log)

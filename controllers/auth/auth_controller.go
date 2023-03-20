@@ -9,8 +9,9 @@ import (
 	"github.com/khdoba/banking/configs"
 	"github.com/khdoba/banking/constants"
 	"github.com/khdoba/banking/entities"
+	e "github.com/khdoba/banking/errors"
 	"github.com/khdoba/banking/logger"
-	e "github.com/khdoba/banking/pkg/errors"
+	pkgerrors "github.com/khdoba/banking/pkg/errors"
 	"github.com/khdoba/banking/pkg/jwt"
 	"github.com/khdoba/banking/pkg/security"
 	"github.com/khdoba/banking/storage"
@@ -45,7 +46,7 @@ func (ac authController) Login(ctx context.Context, req entities.LoginReq) (*ent
 	if err != nil {
 		ac.log.Error("calling GetByPhoneNumber failed", logger.Error(err))
 		if errors.Is(err, e.ErrCustomerNotExists) {
-			return nil, e.NewError(http.StatusForbidden, "phoneNumber or password is wrong")
+			return nil, pkgerrors.NewError(http.StatusForbidden, "phoneNumber or password is wrong")
 		}
 		return nil, err
 	}
@@ -58,7 +59,7 @@ func (ac authController) Login(ctx context.Context, req entities.LoginReq) (*ent
 
 	if !match {
 		ac.log.Info("ComparePassword failed")
-		err := e.NewError(http.StatusForbidden, "phoneNumber or password is wrong")
+		err := pkgerrors.NewError(http.StatusForbidden, "phoneNumber or password is wrong")
 		return nil, err
 	}
 

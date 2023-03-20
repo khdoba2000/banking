@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/khdoba/banking/configs"
+	accountcontroller "github.com/khdoba/banking/controllers/account"
 	authcontroller "github.com/khdoba/banking/controllers/auth"
 	"github.com/khdoba/banking/logger"
 	e "github.com/khdoba/banking/pkg/errors"
@@ -13,17 +14,19 @@ import (
 )
 
 type Handler struct {
-	cfg            *configs.Configuration
-	log            logger.LoggerI
-	authController authcontroller.AuthController
+	cfg               *configs.Configuration
+	log               logger.LoggerI
+	authController    authcontroller.AuthController
+	accountController accountcontroller.AccountController
 }
 
 // New creates a new Handler
-func New(cfg *configs.Configuration, log logger.LoggerI, authController authcontroller.AuthController) Handler {
+func New(cfg *configs.Configuration, log logger.LoggerI, authController authcontroller.AuthController, accountController accountcontroller.AccountController) Handler {
 	return Handler{
-		cfg:            cfg,
-		log:            log,
-		authController: authController,
+		cfg:               cfg,
+		log:               log,
+		authController:    authController,
+		accountController: accountController,
 	}
 }
 

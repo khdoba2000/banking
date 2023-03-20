@@ -6,4 +6,6 @@ p, unauthorized, /api/auth/login, POST
 p, customer_in_signup, /api/auth/sign-up, POST
 p, customer, /api/auth/logout, DELETE
 
+p, customer, /api/accounts/list, GET
+
 p, unauthorized, /api/customer/payments, GET

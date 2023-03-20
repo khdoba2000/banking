@@ -2,6 +2,9 @@ package postgres
 
 import (
 	"context"
+	"database/sql"
+	"errors"
+	"fmt"
 
 	"github.com/jmoiron/sqlx"
 	"github.com/khdoba/banking/constants"
@@ -51,4 +54,39 @@ func (r *accountRepo) Create(ctx context.Context, req entities.CreateAccountReq)
 	}
 
 	return nil
+}
+
+// ListByOwnerID
+func (r *accountRepo) ListByOwnerID(ctx context.Context, ownerID string) ([]entities.Account, error) {
+	rows, err := r.db.Query(`
+		SELECT id, currency_code, balance
+		FROM accounts
+		WHERE 
+			owner_id = $1
+	`, ownerID)
+
+	if err != nil {
+		fmt.Println("QueryRow  error:", err)
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, e.ErrAccountNotExists
+		}
+		return nil, err
+	}
+
+	var accounts []entities.Account
+	for rows.Next() {
+		account := entities.Account{}
+		err := rows.Scan(
+			&account.ID,
+			&account.CurrencyCode,
+			&account.Balance,
+		)
+		if err != nil {
+			return nil, err
+		}
+
+		accounts = append(accounts, account)
+	}
+
+	return accounts, nil
 }

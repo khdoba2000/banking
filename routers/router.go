@@ -40,6 +40,7 @@ func (r Router) Start() {
 	r.router.Use(casbinJWTRoleAuthorizer.Middleware())
 
 	r.AuthRouters()
+	r.AccountRouters()
 	// r.CustomerRouters()
 
 	r.logger.Info("HTTP: Server being started...", logger.String("port", r.config.HTTPPort))

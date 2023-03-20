@@ -6,7 +6,8 @@ type CreateAccountReq struct {
 }
 
 type Account struct {
-	ID      string
-	OwnerID string
-	Balance uint64
+	ID           string
+	CurrencyCode string
+	OwnerID      string `json:"owner_id,omitempty"`
+	Balance      uint64
 }

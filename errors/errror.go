@@ -20,6 +20,7 @@ import (
 
 var (
 	ErrCustomerNotExists     = e.NewError(http.StatusNotFound, "customer not exists")
+	ErrAccountNotExists      = e.NewError(http.StatusNotFound, "account not exists")
 	ErrCustomerAlreadyExists = e.NewError(http.StatusBadRequest, "customer with this phone number already exists")
 	ErrAccountAlreadyExists  = e.NewError(http.StatusBadRequest, "account with this info already exists")
 )
