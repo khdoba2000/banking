@@ -63,7 +63,7 @@ func (r *customerRepo) Create(ctx context.Context, req entities.Customer) error 
 
 	defer func() {
 		if err != nil {
-			err = tx.Rollback()
+			tx.Rollback()
 		} else {
 			err = tx.Commit()
 		}

@@ -6,6 +6,7 @@ import (
 	"github.com/khdoba/banking/constants"
 	accountcontroller "github.com/khdoba/banking/controllers/account"
 	authcontroller "github.com/khdoba/banking/controllers/auth"
+	transactioncontroller "github.com/khdoba/banking/controllers/transaction"
 	"github.com/khdoba/banking/handlers"
 	"github.com/khdoba/banking/logger"
 	"github.com/khdoba/banking/routers"
@@ -36,9 +37,16 @@ func main() {
 	//controllers init
 	authcontroller := authcontroller.NewAuthController(log, strg)
 	accountcontroller := accountcontroller.NewAccountController(log, strg)
+	transactioncontroller := transactioncontroller.NewTransactionController(log, strg)
 
 	//handlers init
-	h := handlers.New(cfg, log, authcontroller, accountcontroller)
+	h := handlers.New(
+		cfg,
+		log,
+		authcontroller,
+		accountcontroller,
+		transactioncontroller,
+	)
 
 	//routers
 	router := routers.New(h, cfg, log)

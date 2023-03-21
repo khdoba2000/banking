@@ -8,6 +8,8 @@ import (
 	"unicode"
 
 	"strings"
+
+	"github.com/google/uuid"
 )
 
 var emailRegex = regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
@@ -88,4 +90,10 @@ func IsNil(i interface{}) bool {
 		return reflect.ValueOf(i).IsNil()
 	}
 	return false
+}
+
+// IsValidUUID validates uuid
+func IsValidUUID(id string) bool {
+	_, err := uuid.Parse(id)
+	return err == nil
 }

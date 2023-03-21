@@ -12,13 +12,15 @@ import (
 type Storage interface {
 	Customer() repo.ICustomerStorage
 	Account() repo.IAccountStorage
+	Transaction() repo.ITransactionStorage
 	// other storage interfaces
 	//
 }
 
 type storagePg struct {
-	customerRepo repo.ICustomerStorage
-	accountRepo  repo.IAccountStorage
+	customerRepo    repo.ICustomerStorage
+	accountRepo     repo.IAccountStorage
+	transactionRepo repo.ITransactionStorage
 }
 
 // New
@@ -29,8 +31,9 @@ func New(cfg *configs.Configuration) *storagePg {
 		log.Fatalf("error connecting to postgres database: %v", err)
 	}
 	return &storagePg{
-		customerRepo: postgres.NewCustomer(postgresDB),
-		accountRepo:  postgres.NewAccount(postgresDB),
+		customerRepo:    postgres.NewCustomer(postgresDB),
+		accountRepo:     postgres.NewAccount(postgresDB),
+		transactionRepo: postgres.NewTransaction(postgresDB),
 	}
 }
 
@@ -42,4 +45,9 @@ func (s storagePg) Customer() repo.ICustomerStorage {
 // Account returns account repository
 func (s storagePg) Account() repo.IAccountStorage {
 	return s.accountRepo
+}
+
+// Transaction returns transaction repository
+func (s storagePg) Transaction() repo.ITransactionStorage {
+	return s.transactionRepo
 }

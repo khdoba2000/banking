@@ -16,3 +16,9 @@ const (
 	CustomerRole                  = "customer"
 	VerifyCodeLength              = 6
 )
+
+const (
+	IncomeTransactionID = iota
+	ExpenseTransactionID
+	TransferTransactionID
+)

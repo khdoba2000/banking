@@ -41,6 +41,7 @@ func (r Router) Start() {
 
 	r.AuthRouters()
 	r.AccountRouters()
+	r.TransactionRouters()
 	// r.CustomerRouters()
 
 	r.logger.Info("HTTP: Server being started...", logger.String("port", r.config.HTTPPort))

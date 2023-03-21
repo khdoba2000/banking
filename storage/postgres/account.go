@@ -32,7 +32,7 @@ func (r *accountRepo) Create(ctx context.Context, req entities.CreateAccountReq)
 
 	defer func() {
 		if err != nil {
-			err = tx.Rollback()
+			tx.Rollback()
 		} else {
 			err = tx.Commit()
 		}
