@@ -56,37 +56,33 @@ func (r *accountRepo) Create(ctx context.Context, req entities.CreateAccountReq)
 	return nil
 }
 
-// ListByOwnerID
-func (r *accountRepo) ListByOwnerID(ctx context.Context, ownerID string) ([]entities.Account, error) {
-	rows, err := r.db.Query(`
-		SELECT id, currency_code, balance
+// GetByOwnerID
+func (r *accountRepo) GetByOwnerID(ctx context.Context, ownerID string) (*entities.Account, error) {
+	row := r.db.QueryRow(`
+		SELECT id, balance
 		FROM accounts
 		WHERE 
 			owner_id = $1
+			AND currency_code = 'UZS'
+		LIMIT 1
 	`, ownerID)
 
-	if err != nil {
-		fmt.Println("QueryRow  error:", err)
-		if errors.Is(err, sql.ErrNoRows) {
+	if row.Err() != nil {
+		fmt.Println("QueryRow  error:", row.Err())
+		if errors.Is(row.Err(), sql.ErrNoRows) {
 			return nil, e.ErrAccountNotExists
 		}
+		return nil, row.Err()
+	}
+
+	account := entities.Account{}
+	err := row.Scan(
+		&account.ID,
+		&account.Balance,
+	)
+	if err != nil {
 		return nil, err
 	}
 
-	var accounts []entities.Account
-	for rows.Next() {
-		account := entities.Account{}
-		err := rows.Scan(
-			&account.ID,
-			&account.CurrencyCode,
-			&account.Balance,
-		)
-		if err != nil {
-			return nil, err
-		}
-
-		accounts = append(accounts, account)
-	}
-
-	return accounts, nil
+	return &account, nil
 }

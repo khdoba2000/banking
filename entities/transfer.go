@@ -3,6 +3,7 @@ package entities
 import (
 	"errors"
 
+	"github.com/khdoba/banking/constants"
 	"github.com/khdoba/banking/pkg/utils"
 )
 
@@ -26,4 +27,14 @@ func (t *Transfer) Validate() error {
 		return errors.New("cannot transfer to the same account")
 	}
 	return nil
+}
+
+// GetTypeID ...
+func (t *Transfer) GetTypeID() int {
+	return constants.TransferTransactionID
+}
+
+// IsOut ...
+func (t *Transfer) IsOut() bool {
+	return true
 }

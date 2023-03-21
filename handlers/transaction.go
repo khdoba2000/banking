@@ -8,6 +8,7 @@ import (
 	"github.com/khdoba/banking/configs"
 	"github.com/khdoba/banking/entities"
 	"github.com/khdoba/banking/pkg/http"
+	"github.com/khdoba/banking/pkg/jwt"
 )
 
 // // CreateTransaction
@@ -72,17 +73,20 @@ func (h *Handler) CreateExpense(c *gin.Context) {
 	ctx, cancel := context.WithTimeout(c.Request.Context(), time.Second*time.Duration(configs.Config().CtxTimeoutSeconds))
 	defer cancel()
 
-	// customerID, err := jwt.ExtractFromClaims("id", c.Request.Header.Get("Authorization"), []byte(h.cfg.JWTSecretKey))
-	// if err != nil {
-	// 	h.handleResponse(c, StatusFromError(err), err.Error())
-	// 	return
-	// }
+	customerID, err := jwt.ExtractFromClaims("id", c.Request.Header.Get("Authorization"), []byte(h.cfg.JWTSecretKey))
+	if err != nil {
+		h.handleResponse(c, StatusFromError(err), err.Error())
+		return
+	}
 
-	// customerIDString := customerID.(string)
+	customerIDString := customerID.(string)
 
 	resp, err := h.transactionController.Create(
 		ctx,
-		&expense,
+		entities.CreateTransactionReq{
+			CustomerID:  customerIDString,
+			Transaction: &expense,
+		},
 	)
 	if err != nil {
 		h.handleResponse(c, StatusFromError(err), err.Error())
@@ -110,17 +114,20 @@ func (h *Handler) CreateIncome(c *gin.Context) {
 	ctx, cancel := context.WithTimeout(c.Request.Context(), time.Second*time.Duration(configs.Config().CtxTimeoutSeconds))
 	defer cancel()
 
-	// customerID, err := jwt.ExtractFromClaims("id", c.Request.Header.Get("Authorization"), []byte(h.cfg.JWTSecretKey))
-	// if err != nil {
-	// 	h.handleResponse(c, StatusFromError(err), err.Error())
-	// 	return
-	// }
+	customerID, err := jwt.ExtractFromClaims("id", c.Request.Header.Get("Authorization"), []byte(h.cfg.JWTSecretKey))
+	if err != nil {
+		h.handleResponse(c, StatusFromError(err), err.Error())
+		return
+	}
 
-	// customerIDString := customerID.(string)
+	customerIDString := customerID.(string)
 
 	resp, err := h.transactionController.Create(
 		ctx,
-		&income,
+		entities.CreateTransactionReq{
+			CustomerID:  customerIDString,
+			Transaction: &income,
+		},
 	)
 	if err != nil {
 		h.handleResponse(c, StatusFromError(err), err.Error())
@@ -148,17 +155,20 @@ func (h *Handler) CreateTransfer(c *gin.Context) {
 	ctx, cancel := context.WithTimeout(c.Request.Context(), time.Second*time.Duration(configs.Config().CtxTimeoutSeconds))
 	defer cancel()
 
-	// customerID, err := jwt.ExtractFromClaims("id", c.Request.Header.Get("Authorization"), []byte(h.cfg.JWTSecretKey))
-	// if err != nil {
-	// 	h.handleResponse(c, StatusFromError(err), err.Error())
-	// 	return
-	// }
+	customerID, err := jwt.ExtractFromClaims("id", c.Request.Header.Get("Authorization"), []byte(h.cfg.JWTSecretKey))
+	if err != nil {
+		h.handleResponse(c, StatusFromError(err), err.Error())
+		return
+	}
 
-	// customerIDString := customerID.(string)
+	customerIDString := customerID.(string)
 
 	resp, err := h.transactionController.Create(
 		ctx,
-		&transfer,
+		entities.CreateTransactionReq{
+			CustomerID:  customerIDString,
+			Transaction: &transfer,
+		},
 	)
 	if err != nil {
 		h.handleResponse(c, StatusFromError(err), err.Error())

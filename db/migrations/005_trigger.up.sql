@@ -20,4 +20,4 @@ END;
 $$ LANGUAGE plpgsql;
 
 
-CREATE TRIGGER synch_balance_trigger AFTER INSERT ON transactions FOR EACH ROW EXECUTE FUNCTION update_balance();
+CREATE TRIGGER synch_balance_trigger AFTER INSERT ON transactions FOR EACH ROW EXECUTE FUNCTION synch_balance();

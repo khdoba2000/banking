@@ -9,5 +9,5 @@ import (
 // IAccountStorage account storage interface
 type IAccountStorage interface {
 	Create(ctx context.Context, req entities.CreateAccountReq) error
-	ListByOwnerID(ctx context.Context, ownerID string) ([]entities.Account, error)
+	GetByOwnerID(ctx context.Context, ownerID string) (*entities.Account, error)
 }

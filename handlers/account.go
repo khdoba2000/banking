@@ -10,8 +10,8 @@ import (
 	"github.com/khdoba/banking/pkg/jwt"
 )
 
-// ListAccounts lists accounts of a given customer
-func (h *Handler) ListAccounts(c *gin.Context) {
+// GetAccount gets account of a customer
+func (h *Handler) GetAccount(c *gin.Context) {
 
 	ctx, cancel := context.WithTimeout(c.Request.Context(), time.Second*time.Duration(configs.Config().CtxTimeoutSeconds))
 	defer cancel()
@@ -22,7 +22,7 @@ func (h *Handler) ListAccounts(c *gin.Context) {
 		return
 	}
 
-	resp, err := h.accountController.ListByOwnerID(
+	resp, err := h.accountController.GetByOwnerID(
 		ctx,
 		customerID.(string),
 	)

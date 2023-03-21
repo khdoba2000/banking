@@ -3,6 +3,7 @@ package entities
 import (
 	"errors"
 
+	"github.com/khdoba/banking/constants"
 	"github.com/khdoba/banking/pkg/utils"
 )
 
@@ -17,4 +18,14 @@ func (e *Expense) Validate() error {
 		return errors.New("invalid AccountID: invalid uuid")
 	}
 	return nil
+}
+
+// GetTypeID ...
+func (e *Expense) GetTypeID() int {
+	return constants.ExpenseTransactionID
+}
+
+// IsOut ...
+func (e *Expense) IsOut() bool {
+	return true
 }

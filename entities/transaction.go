@@ -9,6 +9,8 @@ type Transaction interface {
 	Validator
 	GetAmount() uint64
 	GetAccountID() string
+	GetTypeID() int
+	IsOut() bool
 }
 
 type TransactionImp struct {
@@ -76,4 +78,9 @@ type TransactionOut struct {
 	AccountToID   string
 	Amount        uint64
 	CreatedAt     time.Time
+}
+
+type CreateTransactionReq struct {
+	Transaction Transaction
+	CustomerID  string
 }

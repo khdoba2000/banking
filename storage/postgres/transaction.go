@@ -41,20 +41,17 @@ func (r *transactionRepo) Create(ctx context.Context, req entities.Transaction) 
 		}
 	}()
 
-	transactionTypeID := 0
 	switch transaction := req.(type) {
 	case *entities.Income:
-		// accountFromID = sql.NullString{Valid: false}
 		accountToID.Scan(req.GetAccountID())
-		transactionTypeID = constants.IncomeTransactionID
+		// transactionTypeID = constants.IncomeTransactionID
 	case *entities.Expense:
-		// accountToID = sql.NullString{Valid: false}
 		accountFromID.Scan(req.GetAccountID())
-		transactionTypeID = constants.ExpenseTransactionID
+		// transactionTypeID = constants.ExpenseTransactionID
 	case *entities.Transfer:
 		accountFromID.Scan(req.GetAccountID())
 		accountToID.Scan(transaction.AccountToID)
-		transactionTypeID = constants.TransferTransactionID
+		// transactionTypeID = constants.TransferTransactionID
 	}
 
 	row := tx.QueryRowContext(ctx, `
@@ -82,7 +79,7 @@ func (r *transactionRepo) Create(ctx context.Context, req entities.Transaction) 
 			amount, 
 			created_at
 	`, req.GetID(),
-		transactionTypeID,
+		req.GetTypeID(),
 		accountFromID,
 		accountToID,
 		req.GetAmount())
