@@ -52,6 +52,8 @@ func (r *transactionRepo) Create(ctx context.Context, req entities.Transaction) 
 		accountFromID.Scan(req.GetAccountID())
 		accountToID.Scan(transaction.AccountToID)
 		// transactionTypeID = constants.TransferTransactionID
+	default:
+		return nil, e.ErrInvalidTransactionType
 	}
 
 	row := tx.QueryRowContext(ctx, `

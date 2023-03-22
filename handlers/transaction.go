@@ -79,7 +79,11 @@ func (h *Handler) CreateExpense(c *gin.Context) {
 		return
 	}
 
-	customerIDString := customerID.(string)
+	customerIDString, ok := customerID.(string)
+	if !ok {
+		h.handleResponse(c, http.BadRequest, "customerID is not stringable")
+		return
+	}
 
 	resp, err := h.transactionController.Create(
 		ctx,
@@ -120,7 +124,11 @@ func (h *Handler) CreateIncome(c *gin.Context) {
 		return
 	}
 
-	customerIDString := customerID.(string)
+	customerIDString, ok := customerID.(string)
+	if !ok {
+		h.handleResponse(c, http.BadRequest, "customerID is not stringable")
+		return
+	}
 
 	resp, err := h.transactionController.Create(
 		ctx,
@@ -161,7 +169,11 @@ func (h *Handler) CreateTransfer(c *gin.Context) {
 		return
 	}
 
-	customerIDString := customerID.(string)
+	customerIDString, ok := customerID.(string)
+	if !ok {
+		h.handleResponse(c, http.BadRequest, "customerID is not stringable")
+		return
+	}
 
 	resp, err := h.transactionController.Create(
 		ctx,
