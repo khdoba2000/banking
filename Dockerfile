@@ -16,5 +16,9 @@ RUN export CGO_ENABLED=0 && \
 
 FROM alpine
 COPY --from=builder banking .
+COPY .env ./.env
+COPY ./configs/rbac_model.conf ./configs/rbac_model.conf
+COPY ./configs/models.csv ./configs/models.csv
+COPY ./db/migrations/ ./db/migrations/
 
-ENTRYPOINT ["/banking"]
+ENTRYPOINT ["./banking"]
