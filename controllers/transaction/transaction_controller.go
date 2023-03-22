@@ -5,11 +5,11 @@ import (
 	"net/http"
 
 	"github.com/google/uuid"
-	"github.com/khdoba/banking/configs"
-	"github.com/khdoba/banking/entities"
-	"github.com/khdoba/banking/logger"
-	e "github.com/khdoba/banking/pkg/errors"
-	"github.com/khdoba/banking/storage"
+	"github.com/khdoba2000/banking/configs"
+	"github.com/khdoba2000/banking/entities"
+	"github.com/khdoba2000/banking/logger"
+	e "github.com/khdoba2000/banking/pkg/errors"
+	"github.com/khdoba2000/banking/storage"
 )
 
 // TransactionController

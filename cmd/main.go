@@ -2,15 +2,15 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/khdoba/banking/configs"
-	"github.com/khdoba/banking/constants"
-	accountcontroller "github.com/khdoba/banking/controllers/account"
-	authcontroller "github.com/khdoba/banking/controllers/auth"
-	transactioncontroller "github.com/khdoba/banking/controllers/transaction"
-	"github.com/khdoba/banking/handlers"
-	"github.com/khdoba/banking/logger"
-	"github.com/khdoba/banking/routers"
-	"github.com/khdoba/banking/storage"
+	"github.com/khdoba2000/banking/configs"
+	"github.com/khdoba2000/banking/constants"
+	accountcontroller "github.com/khdoba2000/banking/controllers/account"
+	authcontroller "github.com/khdoba2000/banking/controllers/auth"
+	transactioncontroller "github.com/khdoba2000/banking/controllers/transaction"
+	"github.com/khdoba2000/banking/handlers"
+	"github.com/khdoba2000/banking/logger"
+	"github.com/khdoba2000/banking/routers"
+	"github.com/khdoba2000/banking/storage"
 )
 
 func main() {

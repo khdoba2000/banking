@@ -5,10 +5,10 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/khdoba/banking/configs"
-	"github.com/khdoba/banking/entities"
-	"github.com/khdoba/banking/pkg/http"
-	"github.com/khdoba/banking/pkg/jwt"
+	"github.com/khdoba2000/banking/configs"
+	"github.com/khdoba2000/banking/entities"
+	"github.com/khdoba2000/banking/pkg/http"
+	"github.com/khdoba2000/banking/pkg/jwt"
 )
 
 // // CreateTransaction

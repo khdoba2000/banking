@@ -3,10 +3,10 @@ package storage
 import (
 	"log"
 
-	"github.com/khdoba/banking/configs"
-	"github.com/khdoba/banking/db"
-	"github.com/khdoba/banking/storage/postgres"
-	"github.com/khdoba/banking/storage/repo"
+	"github.com/khdoba2000/banking/configs"
+	"github.com/khdoba2000/banking/db"
+	"github.com/khdoba2000/banking/storage/postgres"
+	"github.com/khdoba2000/banking/storage/repo"
 )
 
 type Storage interface {

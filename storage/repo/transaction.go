@@ -3,7 +3,7 @@ package repo
 import (
 	"context"
 
-	"github.com/khdoba/banking/entities"
+	"github.com/khdoba2000/banking/entities"
 )
 
 // ITransactionStorage transaction storage interface

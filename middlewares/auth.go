@@ -8,9 +8,9 @@ import (
 
 	"github.com/casbin/casbin/v2"
 	"github.com/gin-gonic/gin"
-	"github.com/khdoba/banking/configs"
-	"github.com/khdoba/banking/logger"
-	"github.com/khdoba/banking/pkg/jwt"
+	"github.com/khdoba2000/banking/configs"
+	"github.com/khdoba2000/banking/logger"
+	"github.com/khdoba2000/banking/pkg/jwt"
 	"go.uber.org/zap"
 )
 

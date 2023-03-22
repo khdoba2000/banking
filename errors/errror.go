@@ -3,7 +3,7 @@ package errors
 import (
 	"net/http"
 
-	e "github.com/khdoba/banking/pkg/errors"
+	e "github.com/khdoba2000/banking/pkg/errors"
 )
 
 // var (

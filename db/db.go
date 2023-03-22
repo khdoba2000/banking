@@ -9,7 +9,7 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/joho/godotenv/autoload" // load .env file automatically
-	"github.com/khdoba/banking/configs"
+	"github.com/khdoba2000/banking/configs"
 	"go.uber.org/zap"
 
 	_ "github.com/lib/pq"

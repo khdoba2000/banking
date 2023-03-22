@@ -3,10 +3,10 @@ package account
 import (
 	"context"
 
-	"github.com/khdoba/banking/configs"
-	"github.com/khdoba/banking/entities"
-	"github.com/khdoba/banking/logger"
-	"github.com/khdoba/banking/storage"
+	"github.com/khdoba2000/banking/configs"
+	"github.com/khdoba2000/banking/entities"
+	"github.com/khdoba2000/banking/logger"
+	"github.com/khdoba2000/banking/storage"
 )
 
 // AccountController

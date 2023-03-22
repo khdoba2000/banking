@@ -3,8 +3,8 @@ package entities
 import (
 	"errors"
 
-	"github.com/khdoba/banking/constants"
-	"github.com/khdoba/banking/pkg/utils"
+	"github.com/khdoba2000/banking/constants"
+	"github.com/khdoba2000/banking/pkg/utils"
 )
 
 // Expense

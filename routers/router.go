@@ -2,10 +2,10 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/khdoba/banking/configs"
-	"github.com/khdoba/banking/handlers"
-	"github.com/khdoba/banking/logger"
-	"github.com/khdoba/banking/middlewares"
+	"github.com/khdoba2000/banking/configs"
+	"github.com/khdoba2000/banking/handlers"
+	"github.com/khdoba2000/banking/logger"
+	"github.com/khdoba2000/banking/middlewares"
 	"go.uber.org/zap"
 )
 

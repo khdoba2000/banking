@@ -4,14 +4,14 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/khdoba/banking/configs"
-	accountcontroller "github.com/khdoba/banking/controllers/account"
-	authcontroller "github.com/khdoba/banking/controllers/auth"
-	transactioncontroller "github.com/khdoba/banking/controllers/transaction"
-	"github.com/khdoba/banking/logger"
-	e "github.com/khdoba/banking/pkg/errors"
+	"github.com/khdoba2000/banking/configs"
+	accountcontroller "github.com/khdoba2000/banking/controllers/account"
+	authcontroller "github.com/khdoba2000/banking/controllers/auth"
+	transactioncontroller "github.com/khdoba2000/banking/controllers/transaction"
+	"github.com/khdoba2000/banking/logger"
+	e "github.com/khdoba2000/banking/pkg/errors"
 
-	httppkg "github.com/khdoba/banking/pkg/http"
+	httppkg "github.com/khdoba2000/banking/pkg/http"
 )
 
 type Handler struct {

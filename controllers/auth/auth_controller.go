@@ -6,15 +6,15 @@ import (
 	"net/http"
 
 	"github.com/google/uuid"
-	"github.com/khdoba/banking/configs"
-	"github.com/khdoba/banking/constants"
-	"github.com/khdoba/banking/entities"
-	e "github.com/khdoba/banking/errors"
-	"github.com/khdoba/banking/logger"
-	pkgerrors "github.com/khdoba/banking/pkg/errors"
-	"github.com/khdoba/banking/pkg/jwt"
-	"github.com/khdoba/banking/pkg/security"
-	"github.com/khdoba/banking/storage"
+	"github.com/khdoba2000/banking/configs"
+	"github.com/khdoba2000/banking/constants"
+	"github.com/khdoba2000/banking/entities"
+	e "github.com/khdoba2000/banking/errors"
+	"github.com/khdoba2000/banking/logger"
+	pkgerrors "github.com/khdoba2000/banking/pkg/errors"
+	"github.com/khdoba2000/banking/pkg/jwt"
+	"github.com/khdoba2000/banking/pkg/security"
+	"github.com/khdoba2000/banking/storage"
 )
 
 // AuthController
@@ -59,7 +59,7 @@ func (ac authController) Login(ctx context.Context, req entities.LoginReq) (*ent
 
 	if !match {
 		ac.log.Info("ComparePassword failed")
-		err := pkgerrors.NewError(http.StatusForbidden, "phoneNumber or password is wrong")
+		err = pkgerrors.NewError(http.StatusForbidden, "phoneNumber or password is wrong")
 		return nil, err
 	}
 

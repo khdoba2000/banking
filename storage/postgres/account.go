@@ -7,9 +7,9 @@ import (
 	"fmt"
 
 	"github.com/jmoiron/sqlx"
-	"github.com/khdoba/banking/constants"
-	"github.com/khdoba/banking/entities"
-	e "github.com/khdoba/banking/errors"
+	"github.com/khdoba2000/banking/constants"
+	"github.com/khdoba2000/banking/entities"
+	e "github.com/khdoba2000/banking/errors"
 	"github.com/lib/pq"
 )
 
