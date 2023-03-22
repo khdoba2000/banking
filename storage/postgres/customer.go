@@ -11,7 +11,6 @@ import (
 	"github.com/khdoba2000/banking/entities"
 	e "github.com/khdoba2000/banking/errors"
 	"github.com/lib/pq"
-	_ "github.com/lib/pq"
 )
 
 type customerRepo struct {
