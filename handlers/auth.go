@@ -2,10 +2,9 @@ package handlers
 
 import (
 	"context"
-	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/khdoba2000/banking/configs"
+	"github.com/khdoba2000/banking/constants"
 	"github.com/khdoba2000/banking/entities"
 	"github.com/khdoba2000/banking/pkg/http"
 	"github.com/khdoba2000/banking/pkg/jwt"
@@ -26,7 +25,7 @@ func (h *Handler) Login(c *gin.Context) {
 		return
 	}
 
-	ctx, cancel := context.WithTimeout(c.Request.Context(), time.Second*time.Duration(configs.Config().CtxTimeoutSeconds))
+	ctx, cancel := context.WithTimeout(c.Request.Context(), constants.ContextTimeoutDuration)
 	defer cancel()
 
 	resp, err := h.authController.Login(
@@ -67,7 +66,7 @@ func (h *Handler) SignUp(c *gin.Context) {
 		return
 	}
 
-	ctx, cancel := context.WithTimeout(c.Request.Context(), time.Second*time.Duration(configs.Config().CtxTimeoutSeconds))
+	ctx, cancel := context.WithTimeout(c.Request.Context(), constants.ContextTimeoutDuration)
 	defer cancel()
 
 	resp, err := h.authController.Signup(
@@ -97,7 +96,7 @@ func (h *Handler) SendCode(c *gin.Context) {
 		return
 	}
 
-	ctx, cancel := context.WithTimeout(c.Request.Context(), time.Second*time.Duration(configs.Config().CtxTimeoutSeconds))
+	ctx, cancel := context.WithTimeout(c.Request.Context(), constants.ContextTimeoutDuration)
 	defer cancel()
 
 	err = h.authController.SendCode(
@@ -127,7 +126,7 @@ func (h *Handler) VerifyCode(c *gin.Context) {
 		return
 	}
 
-	ctx, cancel := context.WithTimeout(c.Request.Context(), time.Second*time.Duration(configs.Config().CtxTimeoutSeconds))
+	ctx, cancel := context.WithTimeout(c.Request.Context(), constants.ContextTimeoutDuration)
 	defer cancel()
 
 	resp, err := h.authController.VerifyCode(

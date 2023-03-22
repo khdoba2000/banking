@@ -2,10 +2,9 @@ package handlers
 
 import (
 	"context"
-	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/khdoba2000/banking/configs"
+	"github.com/khdoba2000/banking/constants"
 	"github.com/khdoba2000/banking/pkg/http"
 	"github.com/khdoba2000/banking/pkg/jwt"
 )
@@ -13,7 +12,7 @@ import (
 // GetAccount gets account of a customer
 func (h *Handler) GetAccount(c *gin.Context) {
 
-	ctx, cancel := context.WithTimeout(c.Request.Context(), time.Second*time.Duration(configs.Config().CtxTimeoutSeconds))
+	ctx, cancel := context.WithTimeout(c.Request.Context(), constants.ContextTimeoutDuration)
 	defer cancel()
 
 	customerID, err := jwt.ExtractFromClaims("id", c.Request.Header.Get("Authorization"), []byte(h.cfg.JWTSecretKey))

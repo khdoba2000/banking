@@ -2,10 +2,9 @@ package handlers
 
 import (
 	"context"
-	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/khdoba2000/banking/configs"
+	"github.com/khdoba2000/banking/constants"
 	"github.com/khdoba2000/banking/entities"
 	"github.com/khdoba2000/banking/pkg/http"
 	"github.com/khdoba2000/banking/pkg/jwt"
@@ -26,7 +25,7 @@ func (h *Handler) CreateExpense(c *gin.Context) {
 		return
 	}
 
-	ctx, cancel := context.WithTimeout(c.Request.Context(), time.Second*time.Duration(configs.Config().CtxTimeoutSeconds))
+	ctx, cancel := context.WithTimeout(c.Request.Context(), constants.ContextTimeoutDuration)
 	defer cancel()
 
 	customerID, err := jwt.ExtractFromClaims("id", c.Request.Header.Get("Authorization"), []byte(h.cfg.JWTSecretKey))
@@ -71,7 +70,7 @@ func (h *Handler) CreateIncome(c *gin.Context) {
 		return
 	}
 
-	ctx, cancel := context.WithTimeout(c.Request.Context(), time.Second*time.Duration(configs.Config().CtxTimeoutSeconds))
+	ctx, cancel := context.WithTimeout(c.Request.Context(), constants.ContextTimeoutDuration)
 	defer cancel()
 
 	customerID, err := jwt.ExtractFromClaims("id", c.Request.Header.Get("Authorization"), []byte(h.cfg.JWTSecretKey))
@@ -116,7 +115,7 @@ func (h *Handler) CreateTransfer(c *gin.Context) {
 		return
 	}
 
-	ctx, cancel := context.WithTimeout(c.Request.Context(), time.Second*time.Duration(configs.Config().CtxTimeoutSeconds))
+	ctx, cancel := context.WithTimeout(c.Request.Context(), constants.ContextTimeoutDuration)
 	defer cancel()
 
 	customerID, err := jwt.ExtractFromClaims("id", c.Request.Header.Get("Authorization"), []byte(h.cfg.JWTSecretKey))

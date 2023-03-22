@@ -32,7 +32,6 @@ type Configuration struct {
 
 	ServerPort int
 	ServerHost string
-	ServiceDir string
 
 	PostgresHost     string
 	PostgresPort     int
@@ -47,16 +46,11 @@ type Configuration struct {
 	RefreshPasswdTokenDuration time.Duration
 
 	// context timeout in seconds
-	CtxTimeoutSeconds int
-	SigninKey         string
-	ServerReadTimeout int
 
-	JWTSecretKey                  string
-	JWTAccessTokenExpireDurations time.Duration
-	JWTRefreshTokenExpireDuration time.Duration
+	JWTSecretKey string
 
-	CodeToIgnore  string
-	PhoneToIgnore string
+	// CodeToIgnore  string //used for testing purpose
+	// PhoneToIgnore string	//used for testing purpose
 }
 
 func load() *Configuration {
@@ -88,10 +82,8 @@ func load() *Configuration {
 	config.MiddlewareRolesPath = v.GetString("MIDDLEWARE_ROLES_PATH")
 	config.JWTSecretKey = v.GetString("JWT_SECRET_KEY")
 
-	config.CtxTimeoutSeconds = v.GetInt("CONTEXT_TIMEOUT_SECONDS")
-
-	config.CodeToIgnore = v.GetString("CODE_TO_IGNORE")
-	config.PhoneToIgnore = "+998900000000"
+	// config.CodeToIgnore = v.GetString("CODE_TO_IGNORE") //used for testing purpose
+	// config.PhoneToIgnore = "+998900000000" //used for testing purpose
 
 	//validate the configuration
 	err = config.validate()
@@ -106,5 +98,16 @@ func (c *Configuration) validate() error {
 	if c.HTTPPort == "" {
 		return errors.New("http_port required")
 	}
+	if c.PostgresDatabase == "" {
+		return errors.New("PostgresDatabase required")
+	}
+	if c.PostgresUser == "" {
+		return errors.New("PostgresUser required")
+	}
+	if c.PostgresPassword == "" {
+		return errors.New("PostgresPassword required")
+	}
+	// ....
+
 	return nil
 }
