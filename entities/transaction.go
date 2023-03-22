@@ -39,38 +39,6 @@ func (t *TransactionImp) GetAccountID() string {
 	return t.AccountID
 }
 
-// // Validate ...
-// func (req *Transaction2) Validate() error {
-
-// 	switch req.TypeID {
-// 	case constants.IncomeTransactionID:
-// 		if !utils.IsValidUUID(req.AccountToID) {
-// 			return errors.New("invalid AccountToID: invalid uuid")
-// 		}
-// 	case constants.ExpenseTransactionID:
-// 		if !utils.IsValidUUID(req.AccountFromID) {
-// 			return errors.New("invalid AccountFromID: invalid uuid")
-// 		}
-// 	case constants.TransferTransactionID:
-// 		if !utils.IsValidUUID(req.AccountToID) {
-// 			return errors.New("invalid AccountToID: invalid uuid")
-// 		}
-
-// 	default:
-// 		return errors.New("invalid TypeID")
-// 	}
-
-// 	return nil
-// }
-
-// type Transaction2 struct {
-// 	ID            string
-// 	TypeID        int
-// 	AccountFromID string
-// 	AccountToID   string
-// 	Amount        uint64
-// }
-
 type TransactionOut struct {
 	ID            string
 	TypeName      string

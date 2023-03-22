@@ -17,20 +17,20 @@ type Storage interface {
 	//
 }
 
-type storagePg struct {
+type storage struct {
 	customerRepo    repo.ICustomerStorage
 	accountRepo     repo.IAccountStorage
 	transactionRepo repo.ITransactionStorage
 }
 
 // New
-func New(cfg *configs.Configuration) *storagePg {
+func New(cfg *configs.Configuration) *storage {
 
 	postgresDB, err := db.Init(cfg)
 	if err != nil {
 		log.Fatalf("error connecting to postgres database: %v", err)
 	}
-	return &storagePg{
+	return &storage{
 		customerRepo:    postgres.NewCustomer(postgresDB),
 		accountRepo:     postgres.NewAccount(postgresDB),
 		transactionRepo: postgres.NewTransaction(postgresDB),
@@ -38,16 +38,16 @@ func New(cfg *configs.Configuration) *storagePg {
 }
 
 // Customer returns customer repository
-func (s storagePg) Customer() repo.ICustomerStorage {
+func (s storage) Customer() repo.ICustomerStorage {
 	return s.customerRepo
 }
 
 // Account returns account repository
-func (s storagePg) Account() repo.IAccountStorage {
+func (s storage) Account() repo.IAccountStorage {
 	return s.accountRepo
 }
 
 // Transaction returns transaction repository
-func (s storagePg) Transaction() repo.ITransactionStorage {
+func (s storage) Transaction() repo.ITransactionStorage {
 	return s.transactionRepo
 }

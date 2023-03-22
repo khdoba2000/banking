@@ -51,10 +51,6 @@ func ExtractFromClaims(key, accessToken string, signingKey []byte) (interface{},
 		return nil, errors.New("could not find claims for key: " + key)
 	}
 
-	// if _, ok := claims[key].(string); !ok {
-	// 	return nil, fmt.Errorf("claims key: %v not stringable", key)
-	// }
-
 	return claims[key], nil
 
 }

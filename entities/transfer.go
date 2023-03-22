@@ -24,7 +24,7 @@ func (t *Transfer) Validate() error {
 	}
 
 	if t.AccountID == t.AccountToID {
-		return errors.New("cannot transfer to the same account")
+		return errors.New("cannot do transfer to the same account")
 	}
 	return nil
 }

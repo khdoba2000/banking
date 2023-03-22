@@ -75,16 +75,6 @@ func (h *Handler) handleResponse(c *gin.Context, status httppkg.Status, data int
 	})
 }
 
-// func (h *Handler) getOffsetParam(c *gin.Context) (offset int, err error) {
-// 	offsetStr := c.DefaultQuery("offset", h.cfg.DefaultOffset)
-// 	return strconv.Atoi(offsetStr)
-// }
-
-// func (h *Handler) getLimitParam(c *gin.Context) (offset int, err error) {
-// 	offsetStr := c.DefaultQuery("limit", h.cfg.DefaultLimit)
-// 	return strconv.Atoi(offsetStr)
-// }
-
 // StatusFromError ...
 func StatusFromError(err error) httppkg.Status {
 	if err == nil {

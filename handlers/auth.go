@@ -22,7 +22,7 @@ func (h *Handler) Login(c *gin.Context) {
 
 	err = loginReq.Validate()
 	if err != nil {
-		h.handleResponse(c, http.BadRequest, err.Error())
+		h.handleResponse(c, http.InvalidArgument, err.Error())
 		return
 	}
 
@@ -52,7 +52,7 @@ func (h *Handler) SignUp(c *gin.Context) {
 
 	err = req.Validate()
 	if err != nil {
-		h.handleResponse(c, http.BadRequest, err.Error())
+		h.handleResponse(c, http.InvalidArgument, err.Error())
 		return
 	}
 
@@ -93,7 +93,7 @@ func (h *Handler) SendCode(c *gin.Context) {
 
 	err = req.Validate()
 	if err != nil {
-		h.handleResponse(c, http.BadRequest, err.Error())
+		h.handleResponse(c, http.InvalidArgument, err.Error())
 		return
 	}
 
@@ -123,7 +123,7 @@ func (h *Handler) VerifyCode(c *gin.Context) {
 
 	err = req.Validate()
 	if err != nil {
-		h.handleResponse(c, http.BadRequest, err.Error())
+		h.handleResponse(c, http.InvalidArgument, err.Error())
 		return
 	}
 

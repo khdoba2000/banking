@@ -38,7 +38,7 @@ func NewTransactionController(log logger.LoggerI, storage storage.Storage) Trans
 func (tc transactionController) Create(ctx context.Context, req entities.CreateTransactionReq) (*entities.TransactionOut, error) {
 
 	if req.Transaction.IsOut() {
-		// check the balance is sufficient to do the transaction
+		// check if the balance is sufficient to do the transaction
 		account, err := tc.storage.Account().GetByOwnerID(ctx, req.CustomerID)
 		if err != nil {
 			tc.log.Error("calling Account.GetByOwnerID failed", logger.Error(err))

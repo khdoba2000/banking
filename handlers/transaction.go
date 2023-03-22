@@ -11,50 +11,6 @@ import (
 	"github.com/khdoba2000/banking/pkg/jwt"
 )
 
-// // CreateTransaction
-// func (h *Handler) CreateTransaction(c *gin.Context) {
-// 	req := entities.Transaction{}
-// 	err := c.ShouldBindJSON(&req)
-// 	if err != nil {
-// 		h.handleResponse(c, http.BadRequest, err.Error())
-// 		return
-// 	}
-
-// 	// err = req.Validate()
-// 	// if err != nil {
-// 	// 	h.handleResponse(c, http.BadRequest, err.Error())
-// 	// 	return
-// 	// }
-
-// 	ctx, cancel := context.WithTimeout(c.Request.Context(), time.Second*time.Duration(configs.Config().CtxTimeoutSeconds))
-// 	defer cancel()
-
-// 	// customerID, err := jwt.ExtractFromClaims("id", c.Request.Header.Get("Authorization"), []byte(h.cfg.JWTSecretKey))
-// 	// if err != nil {
-// 	// 	h.handleResponse(c, StatusFromError(err), err.Error())
-// 	// 	return
-// 	// }
-
-// 	// customerIDString := customerID.(string)
-// 	switch req.TypeID {
-// 	case constants.TopupTransactionID:
-// 		// req.AccountToID = customerIDString
-// 	case constants.WithdrawTransactionID:
-// 		// req.AccountFromID = customerIDString
-// 	}
-
-// 	resp, err := h.transactionController.Create(
-// 		ctx,
-// 		&req,
-// 	)
-// 	if err != nil {
-// 		h.handleResponse(c, StatusFromError(err), err.Error())
-// 		return
-// 	}
-
-// 	h.handleResponse(c, http.OK, resp)
-// }
-
 // CreateExpense
 func (h *Handler) CreateExpense(c *gin.Context) {
 	expense := entities.Expense{}
@@ -66,7 +22,7 @@ func (h *Handler) CreateExpense(c *gin.Context) {
 
 	err = expense.Validate()
 	if err != nil {
-		h.handleResponse(c, http.BadRequest, err.Error())
+		h.handleResponse(c, http.InvalidArgument, err.Error())
 		return
 	}
 
@@ -81,7 +37,7 @@ func (h *Handler) CreateExpense(c *gin.Context) {
 
 	customerIDString, ok := customerID.(string)
 	if !ok {
-		h.handleResponse(c, http.BadRequest, "customerID is not stringable")
+		h.handleResponse(c, http.InvalidArgument, "customerID of this user is not stringable")
 		return
 	}
 
@@ -111,7 +67,7 @@ func (h *Handler) CreateIncome(c *gin.Context) {
 
 	err = income.Validate()
 	if err != nil {
-		h.handleResponse(c, http.BadRequest, err.Error())
+		h.handleResponse(c, http.InvalidArgument, err.Error())
 		return
 	}
 
@@ -126,7 +82,7 @@ func (h *Handler) CreateIncome(c *gin.Context) {
 
 	customerIDString, ok := customerID.(string)
 	if !ok {
-		h.handleResponse(c, http.BadRequest, "customerID is not stringable")
+		h.handleResponse(c, http.BadRequest, "customerID of this user is not stringable")
 		return
 	}
 
@@ -156,7 +112,7 @@ func (h *Handler) CreateTransfer(c *gin.Context) {
 
 	err = transfer.Validate()
 	if err != nil {
-		h.handleResponse(c, http.BadRequest, err.Error())
+		h.handleResponse(c, http.InvalidArgument, err.Error())
 		return
 	}
 
@@ -171,7 +127,7 @@ func (h *Handler) CreateTransfer(c *gin.Context) {
 
 	customerIDString, ok := customerID.(string)
 	if !ok {
-		h.handleResponse(c, http.BadRequest, "customerID is not stringable")
+		h.handleResponse(c, http.BadRequest, "customerID of this user is not stringable")
 		return
 	}
 

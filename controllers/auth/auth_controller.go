@@ -110,9 +110,6 @@ func (ac authController) Signup(ctx context.Context, req entities.SignupReq) (*e
 	err = ac.storage.Customer().Create(ctx, customer)
 	if err != nil {
 		ac.log.Error("calling Signup failed", logger.Error(err))
-		// if errors.Is(err, e.ErrCustomerAlreadyExists) {
-		// 	return nil, e.ErrCustomerAlreadyExists
-		// }
 		return nil, err
 	}
 
@@ -124,9 +121,6 @@ func (ac authController) Signup(ctx context.Context, req entities.SignupReq) (*e
 	})
 	if err != nil {
 		ac.log.Error("calling Account.Create failed", logger.Error(err))
-		// if errors.Is(err, e.ErrAccountAlreadyExists) {
-		// 	return nil, e.ErrAccountAlreadyExists
-		// }
 		return nil, err
 	}
 
@@ -193,8 +187,8 @@ func (ac authController) VerifyCode(ctx context.Context, req entities.VerifyCode
 	return &entities.VerifyCodeRes{AccessToken: accessToken}, nil
 
 	//if found but the code is different
-	// return errors.New("invalid code")
+	// return nil, errors.New("invalid code")
 
 	//if not found return error
-	// return errors.New("invalid code")
+	// return nil, errors.New("invalid code")
 }

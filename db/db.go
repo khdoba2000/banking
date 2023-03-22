@@ -33,7 +33,6 @@ func Init(config *configs.Configuration) (*sqlx.DB, error) {
 	db, err := sqlx.Connect("postgres", dbURL)
 	if err != nil {
 		return nil, err
-		// panic(err)
 	}
 
 	return db, nil
